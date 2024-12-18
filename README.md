@@ -145,3 +145,7 @@ This project was developed as part of a college project by a team of 4 students 
 2. **Mohamadu Riyas S**  
 3. **Surya**  
 4. **Logdharshan**  
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
