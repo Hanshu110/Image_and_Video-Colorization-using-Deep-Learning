@@ -104,7 +104,12 @@ Install the required packages using:
 
 ```bash  
 pip install opencv-python-headless numpy streamlit ffmpeg-python  
-```  
+```
+or
+
+```bash
+pip install -r requirements.txt
+```
 
 ---  
 
