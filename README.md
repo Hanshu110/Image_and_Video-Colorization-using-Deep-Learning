@@ -131,6 +131,11 @@ pip install -r requirements.txt
 
    ```bash  
    python -m streamlit run app.py
+   ```
+   or
+
+   ```bash  
+   streamlit run app.py
    ```  
 
 5. Open the provided URL in your browser, upload an image or video, and process it!  
