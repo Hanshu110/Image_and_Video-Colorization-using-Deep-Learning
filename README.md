@@ -1,6 +1,6 @@
 # **AI-Powered Image and Video Colorization Using Deep Learning**  
 
-## **Overview**  
+## **Overview**
 
 This project explores the application of deep learning in transforming grayscale images and videos into realistic, colorized versions. By utilizing pre-trained convolutional neural networks (CNNs) and advanced image-processing techniques, we demonstrate how AI can effectively bridge the gap between monochrome and vibrant visuals. The project also provides an interactive Streamlit-based web interface, allowing users to upload, process, and customize both images and videos.  
 
@@ -10,7 +10,7 @@ This project explores the application of deep learning in transforming grayscale
 
 The goal of this project is to develop an efficient and user-friendly tool for restoring and enhancing grayscale media. It focuses on applying state-of-the-art deep learning models to automate the colorization process for both static images and dynamic video content, showcasing the versatility of CNNs in multimedia processing.  
 
----  
+---
 
 ## **Technologies Used**  
 
