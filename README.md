@@ -288,7 +288,7 @@ This project was developed as part of a college project by a team of 4 students 
 
 1. **Hanish B**  
 2. **Mohamadu Riyas S**  
-3. **Surya**  
+3. **Surya Aswaththan G**  
 4. **Logdharshan**  
 
 ## License
