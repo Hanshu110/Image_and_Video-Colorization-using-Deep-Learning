@@ -9,6 +9,7 @@ from video_colorizer import colorize_video  # Import the video colorizer functio
 def resize_image(img, max_dim=512):
     height, width = img.shape[:2]
     if max(height, width) > max_dim:
+        
         scaling_factor = max_dim / max(height, width)
         img = cv2.resize(img, (int(width * scaling_factor), int(height * scaling_factor)))
     return img
@@ -151,6 +152,9 @@ if option == "Image Colorizer":
                         file_name="colorized_image.jpg",
                         mime="image/jpeg"
                     )
+                    # **Trigger balloons on successful colorization** date 23.01.2025
+                    st.balloons()
+                    st.success("Image colorization completed successfully! 🎉")
         except Exception as e:
             st.error(f"An error occurred: {e}")
     else:
@@ -172,7 +176,7 @@ elif option == "Video Colorizer":
 
                 # Call the video colorization function
                 colorize_video(temp_input_path, output_video_path)
-
+                st.balloons() # Update V-101 date 23.01.2025
                 st.success("Video colorization completed!")
 
                 # Show a download button
