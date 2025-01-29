@@ -5,6 +5,7 @@ from PIL import Image
 import os
 from io import BytesIO
 from video_colorizer import colorize_video  # Import the video colorizer function
+from enhancements import real_time_preview, apply_style_transfer # Import enhancement functions
 
 def resize_image(img, max_dim=512):
     height, width = img.shape[:2]
@@ -34,6 +35,16 @@ def load_model(prototxt, model, points):
     net.getLayer(conv8).blobs = [np.full([1, 313], 2.606, dtype="float32")]
     return net
 
+
+def adjust_intensity(colorized_img, intensity=1.0):
+    return np.clip(colorized_img * intensity, 0, 255).astype(np.uint8)
+
+def adjust_hue_saturation(image, hue=0, saturation=1.0):
+    hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV).astype(np.float32)
+    hsv[..., 0] = (hsv[..., 0] + hue) % 180
+    hsv[..., 1] = hsv[..., 1] * saturation
+    hsv = np.clip(hsv, 0, 255).astype(np.uint8)
+    return cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)
 def colorizer(img, net):
     # Ensure input image has 3 channels (convert grayscale to RGB)
     if len(img.shape) == 2 or img.shape[2] == 1:
@@ -64,16 +75,6 @@ def colorizer(img, net):
     colorized = (255 * colorized).astype("uint8")
 
     return colorized
-
-def adjust_intensity(colorized_img, intensity=1.0):
-    return np.clip(colorized_img * intensity, 0, 255).astype(np.uint8)
-
-def adjust_hue_saturation(image, hue=0, saturation=1.0):
-    hsv = cv2.cvtColor(image, cv2.COLOR_RGB2HSV).astype(np.float32)
-    hsv[..., 0] = (hsv[..., 0] + hue) % 180
-    hsv[..., 1] = hsv[..., 1] * saturation
-    hsv = np.clip(hsv, 0, 255).astype(np.uint8)
-    return cv2.cvtColor(hsv, cv2.COLOR_HSV2RGB)
 
 def apply_color_to_roi(image, net, roi):
     (x, y, w, h) = roi
@@ -121,7 +122,13 @@ if option == "Image Colorizer":
                     # Hue and saturation sliders
                     hue = st.sidebar.slider("Adjust Hue", -90, 90, 0)
                     saturation = st.sidebar.slider("Adjust Saturation", 0.5, 2.0, 1.0)
+                    colorized_img = adjust_intensity(colorized_img, intensity)
                     colorized_img = adjust_hue_saturation(colorized_img, hue, saturation)
+                    
+                    # Apply color to ROI date 28.01.2025
+                    style_type = st.sidebar.selectbox("Apply Style Transfer", ["None", "Vintage", "Sepia", "HDR"])
+                    if style_type != "None":
+                        colorized_img = apply_style_transfer(colorized_img, style_type)
 
                     # Region of Interest (ROI) selection
                     roi_x = st.sidebar.number_input("ROI X", 0, img.shape[1] - 1, 0)
@@ -139,7 +146,6 @@ if option == "Image Colorizer":
                     st.text("Comparison: Original vs. Colorized")
                     comparison = side_by_side_comparison(img, colorized_img)
                     st.image(comparison, use_container_width=True)
-
                     # Download option
                     color_pil = Image.fromarray(colorized_img)
                     buf = BytesIO()
@@ -153,8 +159,10 @@ if option == "Image Colorizer":
                         mime="image/jpeg"
                     )
                     # **Trigger balloons on successful colorization** date 23.01.2025
-                    st.balloons()
+                    st.balloons() #v1.1.0
+                    # st.snow() # add for testing... date 29.01.2025
                     st.success("Image colorization completed successfully! 🎉")
+                    
         except Exception as e:
             st.error(f"An error occurred: {e}")
     else:
@@ -176,7 +184,7 @@ elif option == "Video Colorizer":
 
                 # Call the video colorization function
                 colorize_video(temp_input_path, output_video_path)
-                st.balloons() # Update V-101 date 23.01.2025
+                st.balloons() # Update V-1.1.0 date 23.01.2025
                 st.success("Video colorization completed!")
 
                 # Show a download button
