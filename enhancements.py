@@ -2,12 +2,6 @@
 import cv2
 import numpy as np
 
-def real_time_preview(img, net, intensity=1.0, hue=0, saturation=1.0):
-    colorized_img = colorizer(img, net)
-    colorized_img = adjust_intensity(colorized_img, intensity)
-    colorized_img = adjust_hue_saturation(colorized_img, hue, saturation)
-    return colorized_img
-
 def apply_style_transfer(img, style_type):
     if style_type == "Vintage":
         img = cv2.applyColorMap(img, cv2.COLORMAP_BONE)
