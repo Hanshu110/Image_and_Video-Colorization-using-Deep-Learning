@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.8'  # Ensure compatibility with your project's dependencies
+          python-version: '3.8'  # Adjust if needed
 
       - name: Install dependencies
         run: |
@@ -27,9 +27,9 @@ jobs:
           pip install -r requirements.txt
           pip install pyinstaller
 
-      - name: Build executable
+      - name: Build executable with hidden imports
         run: |
-          pyinstaller --onefile --noconsole app.py
+          pyinstaller --onefile --noconsole --hidden-import=streamlit app.py
         shell: powershell
 
       - name: Upload executable
