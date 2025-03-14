@@ -4,3 +4,4 @@ streamlit
 pillow
 openvino
 opencv-python-headless
+gdown
